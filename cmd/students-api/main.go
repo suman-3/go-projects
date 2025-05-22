@@ -2,8 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
-	"log"
 	"log/slog"
 	"net/http"
 	"os"
@@ -33,7 +31,7 @@ func main() {
 		Handler: router,
 	}
 
-	fmt.Printf("Server started on port %s\n", cfg.HTTPServer.Addr)
+	slog.Info("Server Started ", slog.String("address", cfg.Addr))
 
 	done := make(chan os.Signal, 1)
 
@@ -42,7 +40,7 @@ func main() {
 	go func() {
 		err := server.ListenAndServe()
 		if err != nil {
-			log.Fatalf("Server failed to start: %s", err)
+			slog.Error("Server failed to start", slog.String("error", err.Error()))
 		}
 	}()
 
@@ -54,7 +52,9 @@ func main() {
 
 	defer cancel()
 
-	server.Shutdown(ctx)
+	if err := server.Shutdown(ctx); err != nil {
+		slog.Error("Server failed to shutdown", slog.String("error", err.Error()))
+	}
 
 	slog.Info("Server stopped")
 
