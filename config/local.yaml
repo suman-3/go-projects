@@ -1,0 +1,13 @@
+env: "dev"
+storage_path: "storage/storage.db"
+http_server:
+  address: "localhost:8082"
+  timeout: 60
+  max_connections: 100
+  cors:
+    allow_origin: "*"
+    allow_methods: "GET, POST, PUT, DELETE, OPTIONS"
+    allow_headers: "Content-Type, Authorization"
+    expose_headers: "Content-Length"
+    max_age: 3600
+    allow_credentials: true

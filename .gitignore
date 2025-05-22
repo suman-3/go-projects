@@ -28,3 +28,4 @@ coverage.out
 
 # Environment files
 .env
+storage
